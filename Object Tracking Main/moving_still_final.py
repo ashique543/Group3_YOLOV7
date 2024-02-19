@@ -102,10 +102,14 @@ def classify_objects(frames_folder):
             for obj_num in frame_objects:
                 if obj_num not in entry_frames:
                     entry_frames[obj_num] = frame_num
+                #if an object enters again
+                
+                if obj_num in exit_frames:
+                    del exit_frames[obj_num]
 
             for obj_num in all_objects:
                 if obj_num not in frame_objects and obj_num not in exit_frames:
-                    exit_frames[obj_num] = frame_num
+                    exit_frames[obj_num] = frame_num-1
 
     for obj_num in sorted(all_objects, key=int):
         data.append({'Entry_frame': entry_frames.get(obj_num), 'Exit_frame': exit_frames.get(obj_num, '-')})
